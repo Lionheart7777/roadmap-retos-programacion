@@ -67,6 +67,23 @@ class Data :
         self.age = age
         self.birth_date = birth_date
         self.programming_languages = programming_languages
+        
+# XML CLASS
+with open(xml_file, "r", encoding="utf-8") as xml_data :
+    
+    root = xmll.fromstring(xml_data.read())
+    name = root.find("name").text
+    age = int(root.find("age").text)
+    birth_date = root.find("birth_date").text
+    programming_languages =[]
+    for item in root.find("programming_languages"):
+        programming_languages.append(item.text)
+        
+    xml_class = Data(name, age, birth_date, programming_languages)
+    print(xml_class.__dict__)        
+
+
+    
 #JSON CLASS
 with open(json_file, "r", encoding="utf-8") as json_data :
     json_dict = json.load(json_data)
@@ -78,5 +95,6 @@ with open(json_file, "r", encoding="utf-8") as json_data :
     
     print(json_class.__dict__)
     
-os.remove(xml_file)
-os.remove(json_file)
+print(xml_class.__dict__ == json_class.__dict__)  # True    
+#os.remove(xml_file)
+#os.remove(json_file)
